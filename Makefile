@@ -49,9 +49,9 @@ ARCADIA_OBJECTS = $(patsubst %.cpp,arcadia/%.o,$(ARCADIA_SOURCES)) $(patsubst %.
 arcadia/arcadia: $(ARCADIA_OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-.PHONY: all basic standard fracas kingdoms havilah arcadia
+.PHONY: all basic standard fracas kingdoms havilah taifas arcadia
 
-all: arcadia basic standard fracas kingdoms havilah
+all: arcadia basic standard fracas kingdoms havilah taifas
 
 arcadia: arcadia/arcadia
 
@@ -70,11 +70,15 @@ fracas: FORCE
 havilah: FORCE
 	$(MAKE) GAME=havilah
 
+taifas: FORCE
+	$(MAKE) GAME=taifas
 
-.PHONY: all-clean basic-clean standard-clean fracas-clean kingdoms-clean havilah-clean arcadia-clean clean
+
+.PHONY: all-clean basic-clean standard-clean fracas-clean kingdoms-clean havilah-clean \
+	taifas-clean arcadia-clean clean
 
 all-clean: arcadia-clean basic-clean standard-clean fracas-clean kingdoms-clean \
-	havilah-clean
+	havilah-clean taifas-clean
 
 arcadia-clean:
 	rm -f $(ARCADIA_OBJECTS)
@@ -97,15 +101,19 @@ kingdoms-clean:
 havilah-clean:
 	$(MAKE) GAME=havilah clean
 
+taifas-clean:
+	$(MAKE) GAME=taifas clean
+
 clean:
 	rm -f $(OBJECTS)
 	rm -f $(GAME)/html/$(GAME).html
 	rm -f $(GAME)/$(GAME)
 
-.PHONY: all-rules basic-rules standard-rules fracas-rules kingdoms-rules havilah-rules arcadia-rules rules
+.PHONY: all-rules basic-rules standard-rules fracas-rules kingdoms-rules havilah-rules \
+	taifas-rules arcadia-rules rules
 
 all-rules: arcadia-rules basic-rules standard-rules fracas-rules kingdoms-rules \
-	havilah-rules
+	havilah-rules taifas-rules
 
 arcadia-rules: arcadia/arcadia
 	(cd arcadia; \
@@ -127,6 +135,9 @@ kingdoms-rules:
 
 havilah-rules:
 	$(MAKE) GAME=havilah rules
+
+taifas-rules:
+	$(MAKE) GAME=taifas rules
 
 rules: $(GAME)/$(GAME)
 	(cd $(GAME); \
